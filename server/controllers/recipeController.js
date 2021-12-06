@@ -119,6 +119,7 @@ exports.submitRecipeOnPost = async(req, res) => {
           description: req.body.description,
           email: req.body.email,
           ingredients: req.body.ingredients,
+          instructions: req.body.instructions,
           category: req.body.category,
           image: newImageName
       });

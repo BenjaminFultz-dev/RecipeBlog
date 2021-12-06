@@ -8,3 +8,14 @@ addIngredientsBtn.addEventListener('click', function() {
     input.value = '';
     ingredientList.appendChild(newIngredients);
 });
+
+let addInstructionsBtn = document.getElementById('addInstructionsBtn');
+let instructionList = document.querySelector('.instructionList');
+let instructionDiv = document.querySelectorAll('.instructionDiv')[0];
+
+addInstructionsBtn.addEventListener('click', function() {
+    let newInstructions = instructionDiv.cloneNode(true);
+    let input = newInstructions.getElementsByTagName('input')[0];
+    input.value = '';
+    instructionList.appendChild(newInstructions);
+});
