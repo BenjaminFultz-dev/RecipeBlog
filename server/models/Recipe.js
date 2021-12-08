@@ -23,7 +23,7 @@ const recipeSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['Thai', 'American', 'Chinese', 'Mexican', 'French', 'Spanish'],
+        enum: ['Breakfast', 'Lunch', 'Beverages', 'Appetizers', 'Soups', 'Salads', 'Entrees: Beef', 'Entrees: Poultry', 'Entrees: Pork', 'Entrees: Seafood', 'Entrees: Vegetarian', 'Side Dishes: Vegetables', 'Side Dishes: Other', 'Desserts', 'Canning/Freezing', 'Breads'],
         required: 'This field is required.'
     },
     image: {

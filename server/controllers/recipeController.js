@@ -157,29 +157,70 @@ exports.submitRecipeOnPost = async(req, res) => {
 // async function insertDummyCategoryData() {
 //     try {
 //         await Category.insertMany([{
-//             name: "Thai",
-//             image: "foodPic1.jfif"
+//             name: "Breakfast",
+//             image: "breakfast.jpg"
 //         },
 //         {
-//             name: "American",
-//             image: "foodPic2.jfif"
+//             name: "Lunch",
+//             image: "lunch.jpg"
 //         },
 //         {
-//             name: "Chinese",
-//             image: "foodPic3.jfif"
+//             name: "Beverages",
+//             image: "beverages.jpg"
 //         },
 //         {
-//             name: "Mexican",
-//             image: "foodPic4.jfif"
+//             name: "Appetizers",
+//             image: "appetizers.jpg"
 //         },
 //         {
-//             name: "French",
-//             image: "foodPic5.jfif"
+//             name: "Soups",
+//             image: "soups.jpg"
 //         },
 //         {
-//             name: "Spanish",
-//             image: "foodPic6.jfif"
-//         }
+//             name: "Salads",
+//             image: "salads.jpg"
+//         },
+//         {
+//             name: "Entrees: Beef",
+//             image: "beef.jpg"
+//         },
+//         {
+//             name: "Entrees: Poultry",
+//             image: "poultry.jpg"
+//         },
+//         {
+//             name: "Entrees: Pork",
+//             image: "pork.jpg"
+//         },
+//         {
+//             name: "Entrees: Seafood",
+//             image: "seafood.jpg"
+//         },
+//         {
+//             name: "Entrees: Vegetarian",
+//             image: "vegetarian.jpg"
+//         },
+//         {
+//             name: "Side Dishes: Vegetables",
+//             image: "sidevegetables.jpg"
+//         },
+//         {
+//             name: "Side Dishes: Other",
+//             image: "sideother.jpg"
+//         },
+//         {
+//             name: "Desserts",
+//             image: "desserts.jpg"
+//         },
+//         {
+//             name: "Canning/Freezing",
+//             image: "canning.jpg"
+//         },
+//         {
+//             name: "Breads",
+//             image: "breads.jpg"
+//         },
+
 //     ]);
 //     } catch (error) {
 //         console.log('err', + error)
@@ -187,3 +228,4 @@ exports.submitRecipeOnPost = async(req, res) => {
 // }
 
 // insertDummyCategoryData();
+
