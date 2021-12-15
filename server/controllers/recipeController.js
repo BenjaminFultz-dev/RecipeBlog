@@ -23,7 +23,7 @@ exports.exploreCategories = async(req, res) => {
     try {
        const limitNumber = 20;
        const categories = await Category.find({}).limit(limitNumber);
-       res.render('categories', { title: 'Recipe Blog - Categories', categories }); 
+       res.render('categories', { title: 'Chef\'s Kiss - Categories', categories }); 
     } catch (error) {
       res.status(500).send({ message: error.message || "Error Occurred" });  
     }
