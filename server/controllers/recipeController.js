@@ -2,6 +2,9 @@ require('../models/database');
 const { countDocuments } = require('../models/Category');
 const Category = require('../models/Category');
 const Recipe = require('../models/Recipe');
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 exports.homepage = async(req, res) => {
     try {
@@ -96,8 +99,6 @@ exports.submitRecipe = async(req, res) => {
 
 exports.submitRecipeOnPost = async(req, res) => {
     try {
-
-
       let imageUploadFile;
       let uploadPath;
       let newImageName;
@@ -129,9 +130,46 @@ exports.submitRecipeOnPost = async(req, res) => {
       req.flash('infoSubmit', 'Recipe has been added.');
       res.redirect('/submit-recipe');  
     } catch (error) {
-      req.flash('infoErrors', error)
+      req.flash('infoErrors', error);
       res.redirect('/submit-recipe');
     }    
+}
+
+
+exports.login = (req, res) => {
+  const infoSubmitObj = req.flash('infoSubmit');
+  res.render('login', { title: 'Chef\'s Kiss - Login', infoSubmitObj });
+}
+
+exports.loginOnPost = (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  })
+}
+
+exports.register = (req, res) => {
+  const infoErrorsObj = req.flash('infoErrors');
+  res.render('register', { title: 'Chef\'s Kiss - Register', infoErrorsObj }); 
+}
+
+exports.registerOnPost = async (req, res) => {
+  try {
+    const hash = await bcrypt.hash(req.body.password, 10)
+    const newUser = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: hash
+    });
+
+    await newUser.save();
+    req.flash('infoSubmit', 'User successfully registered. Login with your email and password.');
+    res.redirect('/login')
+  } catch (error) {
+    req.flash('infoErrors', error);
+    res.redirect('/register');
+  }
 }
 
 // async function updateRecipe() {

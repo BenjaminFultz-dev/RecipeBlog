@@ -1,0 +1,38 @@
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Register</h1>
+</div>
+ 
+<!-- login form -->
+<div class="row justify-content-center">
+    <% if (infoErrorsObj != '') { %>
+        <div class="col-8 alert alert-danger" role="alert">
+            <%= infoErrorsObj[0].message %>
+        </div>
+        <% } %>
+    <div class="col-8">
+        <form action="/register" method="POST">
+            <div class="row-g-3">
+                <div class="col-12">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" name="name" class="form-control">
+                </div>
+                <div class="col-12">
+                    <label for="email" class="form-label mt-2">Email</label>
+                    <input type="email" id="email" name="email" class="form-control">
+                </div>
+                <div class="col-12">
+                    <label for="password" class="form-label mt-2">Password</label>
+                    <input type="password" id="password" name="password" class="form-control">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary mt-2">Register</button>
+                </div>
+            </div>
+        </form>
+        <div class="col-12 mt-2">
+          <a class="btn btn-outline-primary mt-2" href="/login">Login</a>  
+        </div>
+    </div>
+</div>
+<!-- end form -->
+ 
