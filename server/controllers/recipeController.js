@@ -6,7 +6,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
-exports.homepage = async(req, res) => {
+exports.homepage = async (req, res) => {
     try {
        const limitNumber = 5;
        const categories = await Category.find({}).limit(limitNumber);
@@ -22,7 +22,7 @@ exports.homepage = async(req, res) => {
 }
 
 
-exports.exploreCategories = async(req, res) => {
+exports.exploreCategories = async (req, res) => {
     try {
        const limitNumber = 20;
        const categories = await Category.find({}).limit(limitNumber);
@@ -33,7 +33,7 @@ exports.exploreCategories = async(req, res) => {
 }
 
 
-exports.exploreCategoriesById = async(req, res) => {
+exports.exploreCategoriesById = async (req, res) => {
     try {
        let categoryId = req.params.id;
        const limitNumber = 20;
@@ -45,7 +45,7 @@ exports.exploreCategoriesById = async(req, res) => {
 }
 
 
-exports.showRecipe = async(req, res) => {
+exports.showRecipe = async (req, res) => {
     try {
        let recipeId = req.params.id;
        const recipe = await Recipe.findById(recipeId);
@@ -56,7 +56,7 @@ exports.showRecipe = async(req, res) => {
 }
 
 
-exports.searchRecipe = async(req, res) => {
+exports.searchRecipe = async (req, res) => {
 
     try {
         let searchTerm = req.body.searchTerm;
@@ -68,7 +68,7 @@ exports.searchRecipe = async(req, res) => {
 }
 
 
-exports.exploreLatest = async(req, res) => {
+exports.exploreLatest = async (req, res) => {
     try {
        const limitNumber = 20;
        const recipe = await Recipe.find({}).sort({ _id: -1 }).limit(limitNumber)
@@ -79,7 +79,7 @@ exports.exploreLatest = async(req, res) => {
 }
 
 
-exports.exploreRandom = async(req, res) => {
+exports.exploreRandom = async (req, res) => {
     try {
        let count = await Recipe.find().countDocuments();
        let random = Math.floor(Math.random() * count);
@@ -90,14 +90,14 @@ exports.exploreRandom = async(req, res) => {
     }
 }
 
-exports.submitRecipe = async(req, res) => {
+exports.submitRecipe = async (req, res) => {
        const infoErrorsObj = req.flash('infoErrors');
        const infoSubmitObj = req.flash('infoSubmit');
        res.render('submit-recipe', { title: 'Chef\'s Kiss - Submit Recipe', infoErrorsObj, infoSubmitObj }); 
 }
 
 
-exports.submitRecipeOnPost = async(req, res) => {
+exports.submitRecipeOnPost = async (req, res) => {
     try {
       let imageUploadFile;
       let uploadPath;
@@ -136,9 +136,10 @@ exports.submitRecipeOnPost = async(req, res) => {
 }
 
 
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
+  const infoErrorsObj = req.flash('infoErrors');
   const infoSubmitObj = req.flash('infoSubmit');
-  res.render('login', { title: 'Chef\'s Kiss - Login', infoSubmitObj });
+  res.render('login', { title: 'Chef\'s Kiss - Login', infoErrorsObj, infoSubmitObj });
 }
 
 exports.loginOnPost = (req, res, next) => {
@@ -146,7 +147,7 @@ exports.loginOnPost = (req, res, next) => {
     successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true
-  })
+  })(req, res, next); 
 }
 
 exports.register = (req, res) => {

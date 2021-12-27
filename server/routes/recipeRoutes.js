@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const recipeController = require('../controllers/recipeController');
+const { ensureAuthenticated } = require('../../config/auth');
 
 router.get('/', recipeController.homepage);
 router.get('/categories', recipeController.exploreCategories);
