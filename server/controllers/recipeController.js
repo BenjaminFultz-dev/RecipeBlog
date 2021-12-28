@@ -1,4 +1,4 @@
-require('../models/database');
+require('../../config/database');
 const { countDocuments } = require('../models/Category');
 const Category = require('../models/Category');
 const Recipe = require('../models/Recipe');

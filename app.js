@@ -10,7 +10,7 @@ const passport = require('passport');
 require('./config/passport')(passport);
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 require('dotenv').config();
 
@@ -35,4 +35,4 @@ app.set('view engine', 'ejs');
 const routes = require('./server/routes/recipeRoutes.js');
 app.use('/', routes);
 
-app.listen(port, () => console.log(`Listening to port ${port}`));
+app.listen(PORT, () => console.log(`Listening to port ${PORT}`));

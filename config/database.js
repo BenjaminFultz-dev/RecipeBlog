@@ -8,6 +8,6 @@ db.once('open', function() {
     console.log('Connected')
 });
 
-require('./Category');
-require('./Recipe');
-// require('./User');
+require('../server/models/Category');
+require('../server/models/Recipe');
+// require('../server/models/User');
