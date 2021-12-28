@@ -1,13 +1,17 @@
-const mongoose = require('mongoose');
-mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
+const mongoose = require("mongoose");
 
-const db = mongoose.connection;
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.DB_STRING, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    console.log('Connected')
-});
+    console.log(`MongoDB Connected`);
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+};
 
-require('../server/models/Category');
-require('../server/models/Recipe');
-// require('../server/models/User');
+module.exports = connectDB;

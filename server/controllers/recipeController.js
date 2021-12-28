@@ -2,9 +2,7 @@ require('../../config/database');
 const { countDocuments } = require('../models/Category');
 const Category = require('../models/Category');
 const Recipe = require('../models/Recipe');
-const User = require('../models/User');
-const bcrypt = require('bcrypt');
-const passport = require('passport');
+
 
 exports.homepage = async (req, res) => {
     try {
@@ -20,30 +18,6 @@ exports.homepage = async (req, res) => {
       res.status(500).send({ message: error.message || "Error Occurred" });  
     }
 }
-
-
-exports.exploreCategories = async (req, res) => {
-    try {
-       const limitNumber = 20;
-       const categories = await Category.find({}).limit(limitNumber);
-       res.render('categories', { title: 'Chef\'s Kiss - Categories', categories }); 
-    } catch (error) {
-      res.status(500).send({ message: error.message || "Error Occurred" });  
-    }
-}
-
-
-exports.exploreCategoriesById = async (req, res) => {
-    try {
-       let categoryId = req.params.id;
-       const limitNumber = 20;
-       const categoryById = await Recipe.find({ 'category': categoryId }).limit(limitNumber);
-       res.render('categories', { title: 'Chef\'s Kiss - Categories', categoryById }); 
-    } catch (error) {
-      res.status(500).send({ message: error.message || "Error Occurred" });  
-    }
-}
-
 
 exports.showRecipe = async (req, res) => {
     try {
@@ -133,44 +107,6 @@ exports.submitRecipeOnPost = async (req, res) => {
       req.flash('infoErrors', error);
       res.redirect('/submit-recipe');
     }    
-}
-
-
-exports.login = async (req, res) => {
-  const infoErrorsObj = req.flash('infoErrors');
-  const infoSubmitObj = req.flash('infoSubmit');
-  res.render('login', { title: 'Chef\'s Kiss - Login', infoErrorsObj, infoSubmitObj });
-}
-
-exports.loginOnPost = (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-  })(req, res, next); 
-}
-
-exports.register = (req, res) => {
-  const infoErrorsObj = req.flash('infoErrors');
-  res.render('register', { title: 'Chef\'s Kiss - Register', infoErrorsObj }); 
-}
-
-exports.registerOnPost = async (req, res) => {
-  try {
-    const hash = await bcrypt.hash(req.body.password, 10)
-    const newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: hash
-    });
-
-    await newUser.save();
-    req.flash('infoSubmit', 'User successfully registered. Login with your email and password.');
-    res.redirect('/login')
-  } catch (error) {
-    req.flash('infoErrors', error);
-    res.redirect('/register');
-  }
 }
 
 // async function updateRecipe() {
