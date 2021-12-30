@@ -2,12 +2,12 @@ require('../../config/database');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const Recipe = require('../models/Recipe');
 
 exports.login = async (req, res) => {
-    const infoErrorsObj = req.flash('infoErrors');
     const infoSubmitObj = req.flash('infoSubmit');
-    res.render('login', { title: 'Chef\'s Kiss - Login', infoErrorsObj, infoSubmitObj });
+    const isAuthenticated = req.isAuthenticated();
+    const errors = req.flash('error');
+    res.render('login', { title: 'Chef\'s Kiss - Login', errors, infoSubmitObj, isAuthenticated });
   }
   
   exports.loginOnPost = (req, res, next) => {
@@ -20,7 +20,8 @@ exports.login = async (req, res) => {
   
   exports.register = (req, res) => {
     const infoErrorsObj = req.flash('infoErrors');
-    res.render('register', { title: 'Chef\'s Kiss - Register', infoErrorsObj }); 
+    const isAuthenticated = req.isAuthenticated();
+    res.render('register', { title: 'Chef\'s Kiss - Register', infoErrorsObj, isAuthenticated }); 
   }
   
   exports.registerOnPost = async (req, res) => {
@@ -43,7 +44,8 @@ exports.login = async (req, res) => {
 
   exports.dashboard = async (req, res) => {
     try {
-    res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user });  
+      const isAuthenticated = req.isAuthenticated();
+      res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated });  
     } catch (error) {
       req.flash('infoErrors', error);
     }

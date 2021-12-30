@@ -3,11 +3,15 @@
 </div>
 <!-- login form -->
 <div class="row justify-content-center">
-    <% if (infoErrorsObj != '') { %>
+    <% if (errors.length > 0) { %>
         <div class="col-8 alert alert-danger" role="alert">
-            <%= infoErrorsObj[0].message %>
+            <ul class="mb-0">
+                <% errors.forEach(error => { %>
+                    <li><%= error %></li>
+                <% }) %>
+            </ul>
         </div>
-        <% } %>
+    <% } %>
     <div class="col-8">
         <form action="/login" method="POST">
             <div class="row-g-3">

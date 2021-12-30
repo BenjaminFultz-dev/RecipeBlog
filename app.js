@@ -11,6 +11,7 @@ const connectDB = require('./config/database');
 const recipeRoutes = require('./server/routes/recipeRoutes.js');
 const categoryRoutes = require('./server/routes/categoryRoutes.js');
 const userRoutes = require('./server/routes/userRoutes.js');
+const homeRoutes = require('./server/routes/homeRoutes.js');
 
 require('./config/passport')(passport);
 require('dotenv').config();
@@ -40,6 +41,6 @@ app.set('layout', './layouts/main');
 app.set('view engine', 'ejs');
 
 
-app.use('/', recipeRoutes, categoryRoutes, userRoutes);
+app.use('/', homeRoutes, recipeRoutes, categoryRoutes, userRoutes);
 
 app.listen(PORT, () => console.log(`Listening to port ${PORT}`));

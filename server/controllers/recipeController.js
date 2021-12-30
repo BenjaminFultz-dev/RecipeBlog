@@ -1,29 +1,12 @@
 require('../../config/database');
-const { countDocuments } = require('../models/Category');
-const Category = require('../models/Category');
 const Recipe = require('../models/Recipe');
-
-
-exports.homepage = async (req, res) => {
-    try {
-       const limitNumber = 5;
-       const categories = await Category.find({}).limit(limitNumber);
-       const latest = await Recipe.find({}).sort({_id: -1}).limit(limitNumber);
-       const appetizers = await Recipe.find({ 'category': 'Appetizers' }).limit(limitNumber);
-       const breakfast = await Recipe.find({ 'category': 'Breakfast' }).limit(limitNumber);
-       const lunch = await Recipe.find({ 'category': 'Lunch' }).limit(limitNumber);
-       const food = { latest, appetizers, breakfast, lunch };
-       res.render('index', { title: 'Chef\'s Kiss - Home', categories, food }); 
-    } catch (error) {
-      res.status(500).send({ message: error.message || "Error Occurred" });  
-    }
-}
 
 exports.showRecipe = async (req, res) => {
     try {
        let recipeId = req.params.id;
        const recipe = await Recipe.findById(recipeId);
-       res.render('recipe', { title: 'Chef\'s Kiss - Recipe', recipe }); 
+       const isAuthenticated = req.isAuthenticated();
+       res.render('recipe', { title: 'Chef\'s Kiss - Recipe', recipe, isAuthenticated }); 
     } catch (error) {
       res.status(500).send({ message: error.message || "Error Occurred" });  
     }
@@ -35,7 +18,8 @@ exports.searchRecipe = async (req, res) => {
     try {
         let searchTerm = req.body.searchTerm;
         let recipe = await Recipe.find({ $text: { $search: searchTerm, $diacriticSensitive: true }});
-        res.render('search', { title: 'Chef\'s Kiss - Search', recipe });
+        const isAuthenticated = req.isAuthenticated();
+        res.render('search', { title: 'Chef\'s Kiss - Search', recipe, isAuthenticated });
     } catch (error) {
         res.status(500).send({ message: error.message || "Error Occurred" });
     }
@@ -46,7 +30,8 @@ exports.exploreLatest = async (req, res) => {
     try {
        const limitNumber = 20;
        const recipe = await Recipe.find({}).sort({ _id: -1 }).limit(limitNumber)
-       res.render('explore-latest', { title: 'Chef\'s Kiss - Explore Latest', recipe }); 
+       const isAuthenticated = req.isAuthenticated();
+       res.render('explore-latest', { title: 'Chef\'s Kiss - Explore Latest', recipe, isAuthenticated }); 
     } catch (error) {
       res.status(500).send({ message: error.message || "Error Occurred" });  
     }
@@ -58,7 +43,8 @@ exports.exploreRandom = async (req, res) => {
        let count = await Recipe.find().countDocuments();
        let random = Math.floor(Math.random() * count);
        let recipe = await Recipe.findOne().skip(random).exec();
-       res.render('explore-random', { title: 'Chef\'s Kiss - Explore Random', recipe }); 
+       const isAuthenticated = req.isAuthenticated();
+       res.render('explore-random', { title: 'Chef\'s Kiss - Explore Random', recipe, isAuthenticated }); 
     } catch (error) {
       res.status(500).send({ message: error.message || "Error Occurred" });  
     }
@@ -67,7 +53,8 @@ exports.exploreRandom = async (req, res) => {
 exports.submitRecipe = async (req, res) => {
        const infoErrorsObj = req.flash('infoErrors');
        const infoSubmitObj = req.flash('infoSubmit');
-       res.render('submit-recipe', { title: 'Chef\'s Kiss - Submit Recipe', infoErrorsObj, infoSubmitObj }); 
+       const isAuthenticated = req.isAuthenticated();
+       res.render('submit-recipe', { title: 'Chef\'s Kiss - Submit Recipe', infoErrorsObj, infoSubmitObj, isAuthenticated }); 
 }
 
 
@@ -100,7 +87,6 @@ exports.submitRecipeOnPost = async (req, res) => {
       });
 
       await newRecipe.save();
-
       req.flash('infoSubmit', 'Recipe has been added.');
       res.redirect('/submit-recipe');  
     } catch (error) {
