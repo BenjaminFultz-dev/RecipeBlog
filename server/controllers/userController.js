@@ -59,12 +59,14 @@ exports.login = async (req, res) => {
 
   exports.addFavorite = async (req, res) => {
     try {
-      await User.findOneAndUpdate(
-        { _id: req.user.id },
-        { favorites: req.params.id }
-      )
-      res.redirect('/dashboard')
+      const user = await User.findById(req.user.id);
+      if (typeof user.favorites === 'undefined') {
+        user.favorites = {}
+      }
+      user.favorites[req.params.id] = true;
+      await user.save();
+      res.redirect('/dashboard');
     } catch (error) {
-      
+      console.log(error);
     }
   }
