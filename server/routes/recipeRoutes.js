@@ -8,8 +8,8 @@ router.get('/recipe/:id', recipeController.showRecipe);
 router.post('/search', recipeController.searchRecipe);
 router.get('/explore-latest', recipeController.exploreLatest);
 router.get('/explore-random', recipeController.exploreRandom);
-router.get('/submit-recipe', recipeController.submitRecipe);
-router.post('/submit-recipe', recipeController.submitRecipeOnPost);
+router.get('/submit-recipe', ensureAuthenticated, recipeController.submitRecipe);
+router.post('/submit-recipe', ensureAuthenticated, recipeController.submitRecipeOnPost);
 
 
 module.exports = router;

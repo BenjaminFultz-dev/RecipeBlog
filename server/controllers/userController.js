@@ -2,6 +2,7 @@ require('../../config/database');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const Recipe = require('../models/Recipe');
 
 exports.login = async (req, res) => {
     const infoErrorsObj = req.flash('infoErrors');
@@ -11,7 +12,7 @@ exports.login = async (req, res) => {
   
   exports.loginOnPost = (req, res, next) => {
     passport.authenticate('local', {
-      successRedirect: '/',
+      successRedirect: '/dashboard',
       failureRedirect: '/login',
       failureFlash: true
     })(req, res, next); 
@@ -37,5 +38,31 @@ exports.login = async (req, res) => {
     } catch (error) {
       req.flash('infoErrors', error);
       res.redirect('/register');
+    }
+  }
+
+  exports.dashboard = async (req, res) => {
+    try {
+    res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user });  
+    } catch (error) {
+      req.flash('infoErrors', error);
+    }
+    
+  }
+
+  exports.logout = (req, res) => {
+    req.logout()
+    res.redirect('/login')
+  }
+
+  exports.addFavorite = async (req, res) => {
+    try {
+      await User.findOneAndUpdate(
+        { _id: req.user.id },
+        { favorites: req.params.id }
+      )
+      res.redirect('/dashboard')
+    } catch (error) {
+      
     }
   }

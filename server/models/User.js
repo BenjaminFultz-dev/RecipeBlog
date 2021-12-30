@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: 'This field is required.'
+    },
+    favorites: {
+       type: Object,
+       required: false
     }
 });
 
