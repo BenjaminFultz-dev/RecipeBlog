@@ -12,12 +12,13 @@ exports.login = async (req, res) => {
   }
   
   exports.loginOnPost = (req, res, next) => {
-    passport.authenticate('local', {
-      successRedirect: '/dashboard',
-      failureRedirect: '/login',
-      failureFlash: true
-    })(req, res, next); 
+      passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/login',
+        failureFlash: true
+      })(req, res, next);    
   }
+    
   
   exports.register = (req, res) => {
     const infoErrorsObj = req.flash('infoErrors');
@@ -46,13 +47,11 @@ exports.login = async (req, res) => {
   exports.dashboard = async (req, res) => {
     try {
       let email = req.user.email;
-      let userFavorites = Object.keys(req.user.favorites);
-      let favorites = []
       const limitNumber = 5;
-      const favoriteRecipes = await userFavorites.forEach(id => { favorites.push(Recipe.findById(id)) });
+      let favorites = await Recipe.find( { _id : { $in : Object.keys(req.user.favorites) } } ).limit(limitNumber);
       const submittedRecipes = await Recipe.find({ 'email': email }).limit(limitNumber);
       const isAuthenticated = req.isAuthenticated();
-      res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated, submittedRecipes, favoriteRecipes, favorites });  
+      res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated, submittedRecipes, favorites });  
     } catch (error) {
       req.flash('infoErrors', error);
     }
@@ -71,6 +70,7 @@ exports.login = async (req, res) => {
         user.favorites = {}
       }
       user.favorites[req.params.id] = true;
+      user.markModified('favorites');
       await user.save();
       res.redirect('/dashboard');
     } catch (error) {
