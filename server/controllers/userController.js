@@ -46,10 +46,13 @@ exports.login = async (req, res) => {
   exports.dashboard = async (req, res) => {
     try {
       let email = req.user.email;
+      let userFavorites = Object.keys(req.user.favorites);
+      let favorites = []
       const limitNumber = 5;
+      const favoriteRecipes = await userFavorites.forEach(id => { favorites.push(Recipe.findById(id)) });
       const submittedRecipes = await Recipe.find({ 'email': email }).limit(limitNumber);
       const isAuthenticated = req.isAuthenticated();
-      res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated, submittedRecipes });  
+      res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated, submittedRecipes, favoriteRecipes, favorites });  
     } catch (error) {
       req.flash('infoErrors', error);
     }
