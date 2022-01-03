@@ -2,6 +2,7 @@ require('../../config/database');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const Recipe = require('../models/Recipe');
 
 exports.login = async (req, res) => {
     const infoSubmitObj = req.flash('infoSubmit');
@@ -44,8 +45,11 @@ exports.login = async (req, res) => {
 
   exports.dashboard = async (req, res) => {
     try {
+      let email = req.user.email;
+      const limitNumber = 5;
+      const submittedRecipes = await Recipe.find({ 'email': email }).limit(limitNumber);
       const isAuthenticated = req.isAuthenticated();
-      res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated });  
+      res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated, submittedRecipes });  
     } catch (error) {
       req.flash('infoErrors', error);
     }

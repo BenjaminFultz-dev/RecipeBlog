@@ -46,7 +46,7 @@ exports.exploreRandom = async (req, res) => {
        const isAuthenticated = req.isAuthenticated();
        res.render('explore-random', { title: 'Chef\'s Kiss - Explore Random', recipe, isAuthenticated }); 
     } catch (error) {
-      res.status(500).send({ message: error.message || "Error Occurred" });  
+       res.status(500).send({ message: error.message || "Error Occurred" });  
     }
 }
 
