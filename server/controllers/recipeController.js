@@ -79,7 +79,7 @@ exports.submitRecipeOnPost = async (req, res) => {
       const newRecipe = new Recipe({
           name: req.body.name,
           description: req.body.description,
-          email: req.body.email,
+          email: req.user.email,
           ingredients: req.body.ingredients,
           instructions: req.body.instructions,
           category: req.body.category,

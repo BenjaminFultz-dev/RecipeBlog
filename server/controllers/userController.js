@@ -48,7 +48,7 @@ exports.login = async (req, res) => {
     try {
       let email = req.user.email;
       const limitNumber = 5;
-      let favorites = await Recipe.find( { _id : { $in : Object.keys(req.user.favorites) } } ).limit(limitNumber);
+      let favorites = await Recipe.find( { _id : { $in : Object.keys(req.user.favorites) }}).limit(limitNumber);
       const submittedRecipes = await Recipe.find({ 'email': email }).limit(limitNumber);
       const isAuthenticated = req.isAuthenticated();
       res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated, submittedRecipes, favorites });  
@@ -76,4 +76,17 @@ exports.login = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  exports.favoriteRecipes = async (req, res) => {
+    let favorites = await Recipe.find( { _id : { $in : Object.keys(req.user.favorites) }})
+    const isAuthenticated = req.isAuthenticated();
+    res.render('favorite-recipes', { title: 'Chef\'s Kiss - Favorite Recipes', user: req.user, isAuthenticated, favorites });
+  }
+
+  exports.submittedRecipes = async (req, res) => {
+    let email = req.user.email;
+    const submittedRecipes = await Recipe.find({ 'email': email })
+    const isAuthenticated = req.isAuthenticated();
+    res.render('submitted-recipes', { title: 'Chef\'s Kiss - Submitted Recipes', user: req.user, isAuthenticated, submittedRecipes });
   }
