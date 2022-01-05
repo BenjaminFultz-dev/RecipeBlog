@@ -9,13 +9,14 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <img src="/uploads/<%- recipe.image %>" class="img-fluid sticky-top" style="top: 20px;" alt="<%- recipe.name %>" Loading="lazy">
-            <form action="/recipe/<%=recipe._id%>/favorite?_method=PUT" method="POST">
+            <form id="favorite-button">
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary mt-2">Save to Favorites</button>
+                    <input type="hidden" name="id" value="<%= recipe._id %>">
+                    <button class="btn btn-primary mt-2 favorite-submit">Add to Favorites</button>
                 </div>
             </form>
         </div>
-        
+
 
         <div class="col-12 col-md-8">
             <div class="row">
@@ -55,4 +56,6 @@
     <% } else { %>
         <p>No item found.</p>
     <% } %>
+
+    <script src="/js/favoriteButton.js"></script>
 

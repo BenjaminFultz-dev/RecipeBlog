@@ -51,7 +51,7 @@ exports.login = async (req, res) => {
       let favorites = await Recipe.find( { _id : { $in : Object.keys(req.user.favorites) }}).limit(limitNumber);
       const submittedRecipes = await Recipe.find({ 'email': email }).limit(limitNumber);
       const isAuthenticated = req.isAuthenticated();
-      res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated, submittedRecipes, favorites });  
+      res.render('dashboard', { title: 'Chef\'s Kiss - Dashboard', user: req.user, isAuthenticated, favorites, submittedRecipes });  
     } catch (error) {
       req.flash('infoErrors', error);
     }
@@ -69,10 +69,10 @@ exports.login = async (req, res) => {
       if (typeof user.favorites === 'undefined') {
         user.favorites = {}
       }
-      user.favorites[req.params.id] = true;
+      user.favorites[req.body.recipeId] = true;
       user.markModified('favorites');
       await user.save();
-      res.redirect('/dashboard');
+      res.json('Recipe added to favorites.');
     } catch (error) {
       console.log(error);
     }
