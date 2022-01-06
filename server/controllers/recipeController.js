@@ -4,9 +4,11 @@ const Recipe = require('../models/Recipe');
 exports.showRecipe = async (req, res) => {
     try {
        let recipeId = req.params.id;
+       let favorites = req.user.favorites;
+       let isFavorite = Object.keys(favorites).includes(recipeId);
        const recipe = await Recipe.findById(recipeId);
        const isAuthenticated = req.isAuthenticated();
-       res.render('recipe', { title: 'Chef\'s Kiss - Recipe', recipe, isAuthenticated }); 
+       res.render('recipe', { title: 'Chef\'s Kiss - Recipe', recipe, isAuthenticated, isFavorite }); 
     } catch (error) {
       res.status(500).send({ message: error.message || "Error Occurred" });  
     }

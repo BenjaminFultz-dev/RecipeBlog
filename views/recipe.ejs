@@ -9,12 +9,21 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <img src="/uploads/<%- recipe.image %>" class="img-fluid sticky-top" style="top: 20px;" alt="<%- recipe.name %>" Loading="lazy">
-            <form id="favorite-button">
-                <div class="col-12">
-                    <input type="hidden" name="id" value="<%= recipe._id %>">
-                    <button class="btn btn-primary mt-2 favorite-submit">Add to Favorites</button>
-                </div>
-            </form>
+            <% if (isFavorite) { %>
+                <form id="remove-favorite-button">
+                    <div class="col-12">
+                        <input type="hidden" name="id" value="<%= recipe._id %>">
+                        <button class="btn btn-danger mt-2 favorite-remove">Remove from Favorites</button>
+                    </div>
+                </form>
+            <% } else { %>    
+                <form id="add-favorite-button">
+                    <div class="col-12">
+                        <input type="hidden" name="id" value="<%= recipe._id %>">
+                        <button class="btn btn-primary mt-2 favorite-submit">Add to Favorites</button> 
+                    </div>
+                </form>
+            <% } %>    
         </div>
 
 
@@ -57,5 +66,6 @@
         <p>No item found.</p>
     <% } %>
 
-    <script src="/js/favoriteButton.js"></script>
+    <script src="/js/addFavoriteButton.js"></script>
+    <script src="/js/removeFavoriteButton.js"></script>
 

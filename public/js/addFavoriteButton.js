@@ -1,14 +1,15 @@
-const favoriteButton = document.querySelector('#favorite-button');
+const favoriteButton = document.querySelector('#add-favorite-button');
 
-favoriteButton.addEventListener('submit', addFavorite); 
-
+if (favoriteButton) {
+    favoriteButton.addEventListener('submit', addFavorite); 
+}
 
 
 async function addFavorite(e) {
     e.preventDefault()
     try {
-        const response = await fetch('/recipe/favorites/add', {
-            method: 'put',
+        const response = await fetch('/recipe/favorites', {
+            method: 'post',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
                 recipeId: e.target.elements['id'].value

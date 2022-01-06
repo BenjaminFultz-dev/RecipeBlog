@@ -78,6 +78,18 @@ exports.login = async (req, res) => {
     }
   }
 
+  exports.removeFavorite = async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id);
+      delete user.favorites[req.body.recipeId]
+      user.markModified('favorites');
+      await user.save();
+      res.json('Recipe removed from favorites.')
+    } catch (error) {
+      
+    }
+  }
+
   exports.favoriteRecipes = async (req, res) => {
     let favorites = await Recipe.find( { _id : { $in : Object.keys(req.user.favorites) }})
     const isAuthenticated = req.isAuthenticated();

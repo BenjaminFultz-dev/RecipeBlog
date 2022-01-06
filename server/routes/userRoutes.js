@@ -9,7 +9,8 @@ router.get('/register', userController.register);
 router.post('/register', userController.registerOnPost);
 router.get('/dashboard', ensureAuthenticated, userController.dashboard);
 router.get('/logout', ensureAuthenticated, userController.logout);
-router.put('/recipe/favorites/add', ensureAuthenticated, userController.addFavorite);
+router.post('/recipe/favorites', ensureAuthenticated, userController.addFavorite);
+router.delete('/recipe/favorites', ensureAuthenticated, userController.removeFavorite);
 router.get('/favorite-recipes', ensureAuthenticated, userController.favoriteRecipes);
 router.get('/submitted-recipes', ensureAuthenticated, userController.submittedRecipes);
 
