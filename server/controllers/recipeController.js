@@ -119,7 +119,7 @@ exports.submitRecipeOnPost = async (req, res) => {
 
 // async function insertDummyCategoryData() {
 //     try {
-//         await Category.insertMany([{
+//         await Category.insertOne({
 //             name: "Breakfast",
 //             image: "breakfast.jpg"
 //         },
@@ -176,15 +176,15 @@ exports.submitRecipeOnPost = async (req, res) => {
 //             image: "desserts.jpg"
 //         },
 //         {
-//             name: "Canning/Freezing",
-//             image: "canning.jpg"
+            // name: "Canning & Freezing",
+            // image: "canning.jpg"
 //         },
 //         {
 //             name: "Breads",
 //             image: "breads.jpg"
 //         },
 
-//     ]);
+//         });
 //     } catch (error) {
 //         console.log('err', + error)
 //     }
