@@ -1,13 +1,22 @@
-# RecipeBlog
-full stack web app for submitting and saving recipes
+# Recipe Blog
+### Description
+Full stack web application for submitting and saving recipes.
 
-#### IN TERMINAL  
-1. npm install => *install node modules*
-2. touch .env  =>   *.env file should contain:*   
-  a. DB_STRING = *your MongoDB connection string*  
-  b. SESSION_SECRET = *RecipeBlogSecretSession*  
-  c. PORT = *your choice of port, or it will default to 3000*  
-3. npm start   =>  *start server*
-  
-#### IN BROWSER  
-4. localhost:3000 (or whichever port you specified)
+### Project Setup
+1. Clone the repo\
+   `git clone git@github.com:BenjaminFultz-dev/RecipeBlog.git`
+
+#### Setup Express API Backend
+2. Install dependencies for the Express server in the project's root directory\
+   `npm install`
+
+3. Copy the example environment file and make any necessary changes\
+`cp ./.env.example .env`
+
+
+#### Running Express API Backend
+`npm start`
+
+
+#### In Browser
+`localhost:2000`
